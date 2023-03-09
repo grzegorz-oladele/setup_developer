@@ -1,0 +1,56 @@
+---
+- name: Installing git
+  apt:
+    name: git
+    update_cache: yes
+
+- name: Installing Openjdk
+  apt:
+    name: default-jdk
+    update_cache: yes
+
+- name: Installing Maven
+  apt:
+    name: maven
+    update_cache: yes
+
+- name: Installing docker
+  apt:
+    name: docker.io
+    update_cache: yes
+
+- name: Restart docker
+  shell:
+    cmd: sudo systemctl restart docker
+    executable: /bin/bash
+
+- name: chmod
+  shell:
+    cmd: sudo chmod 666 /var/run/docker.sock
+    executable: /bin/bash
+
+- name: Checking hello-world image exists
+  docker_image_info:
+    name:
+      - hello-world
+  register: docker_result
+
+- name: Pulling hello-world docker image
+  shell:
+    cmd: docker pull hello-world:latest
+    executable: "{{ shebang }}"
+  when: docker_result.images | length == 0
+
+- name: Checking if a simple java project exist
+  stat:
+    path: '{{ project_directory }}/pom.xml'
+  register: project_from_github
+
+- name: Pulling a simple java app from github
+  command: chdir="{{ desktop }}" git clone "{{ repo }}"
+  when: not project_from_github.stat.exists
+
+- name: Running a simple java app
+  command: chdir="{{ project_directory }}" mvn spring-boot:run
+  async: 15
+  poll: 0

@@ -1,0 +1,7 @@
+---
+# vars file for setup_developer
+shebang: /bin/bash
+repo: https://github.com/grzegorz-oladele/Ansible-java-example-app.git
+desktop: /home/serwer-1/Desktop
+project_directory: /home/serwer-1/Desktop/Ansible-java-example-app
+container_name: nginx-test-1

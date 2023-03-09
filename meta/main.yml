@@ -1,0 +1,23 @@
+galaxy_info:
+  author:
+    Grzegorz Oladele
+  description:
+    Setup all required software on local machine for a new java developer in company
+  company:
+    Envelo sp. z o.o
+  license:
+    license (GPL-2.0-or-later, MIT, etc)
+  min_ansible_version:
+    2.12.2
+  platforms:
+   - name: Debian (KALI Linux)
+     versions:
+     - 2023.1
+  galaxy_tags:
+    - java
+    - git
+    - docker
+    - linux
+    - debian
+    - openjdk
+  dependencies: []
